@@ -1,0 +1,68 @@
+#include <bits/stdc++.h>
+using namespace std;
+int xx[]= {0,0,1,1,-1,-1,1,-1}; //For 8 direction
+int yy[]= {1,-1,1,-1,1,-1,0,0}; // For 8 direction
+
+char s[103][103];
+bool visit[103][103];
+int ans;
+
+int sx,sy,n,m;
+
+void dfs(int ux,int uy)
+{
+    for(int i=0; i<8; i++)
+    {
+        int vx=ux+xx[i];
+        int vy=uy+yy[i];
+
+        if(vx<0 || vy<0 || vx>=m || vy>=n) continue;
+
+        if(visit[vx][vy]==1 || s[vx][vy]=='*') continue;
+
+        if(visit[vx][vy]==0)
+        {
+            visit[vx][vy]=1;
+
+            dfs(vx,vy);
+        }
+    }
+}
+
+
+int main()
+{
+    int kase=0;
+
+
+
+    while(true)
+    {
+
+        cin>>m>>n;
+        ans=0;
+        if (m==0)
+            break;
+        memset(visit,0,sizeof(visit));
+        for(int i=0; i<m; i++)
+        {
+            scanf("%s",s[i]);
+
+        }
+
+        for(int i=0; i<m; i++)
+        {
+            for(int j=0; j<n; j++)
+            {
+                if(visit[i][j]==0 && s[i][j]=='@')
+                {
+                    visit[i][j]=1;
+                    ans++;
+                    dfs(i, j);
+                }
+            }
+        }
+        printf("%d\n",ans);
+    }
+    return 0;
+}
